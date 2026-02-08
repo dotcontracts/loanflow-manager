@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddTransactionModal } from "@/components/modals/AddTransactionModal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -106,6 +107,7 @@ const BankAccounts = () => {
   const [selectedAccount, setSelectedAccount] = useState<string>("equity");
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [isAddTransactionOpen, setIsAddTransactionOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-KE', {
@@ -271,11 +273,17 @@ const BankAccounts = () => {
                   <SelectItem value="debit">Debits</SelectItem>
                 </SelectContent>
               </Select>
-              <Button className="action-btn-primary">
+              <Button className="action-btn-primary" onClick={() => setIsAddTransactionOpen(true)}>
                 <Plus className="w-4 h-4" />
                 <span className="hidden sm:inline">Add Transaction</span>
               </Button>
             </div>
+            
+            <AddTransactionModal 
+              open={isAddTransactionOpen} 
+              onOpenChange={setIsAddTransactionOpen}
+              bankAccount={selectedAccount}
+            />
           </div>
 
           {/* Transactions Table */}

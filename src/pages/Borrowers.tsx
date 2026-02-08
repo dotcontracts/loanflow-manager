@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { AddBorrowerModal } from "@/components/modals/AddBorrowerModal";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -130,6 +131,7 @@ const statusStyles = {
 const Borrowers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [isAddBorrowerOpen, setIsAddBorrowerOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-KE', {
@@ -184,12 +186,17 @@ const Borrowers = () => {
               <List className="w-4 h-4" />
             </Button>
           </div>
-          <Button className="action-btn-primary">
+          <Button className="action-btn-primary" onClick={() => setIsAddBorrowerOpen(true)}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Add Borrower</span>
           </Button>
         </div>
       </div>
+
+      <AddBorrowerModal 
+        open={isAddBorrowerOpen} 
+        onOpenChange={setIsAddBorrowerOpen}
+      />
 
       {/* Borrowers Grid/List */}
       {viewMode === "grid" ? (
