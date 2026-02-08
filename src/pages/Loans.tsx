@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { NewLoanModal } from "@/components/modals/NewLoanModal";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -141,6 +142,7 @@ const statusStyles = {
 const Loans = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [isNewLoanOpen, setIsNewLoanOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-KE', {
@@ -204,12 +206,17 @@ const Loans = () => {
           <Button variant="outline" size="icon">
             <Download className="w-4 h-4" />
           </Button>
-          <Button className="action-btn-primary">
+          <Button className="action-btn-primary" onClick={() => setIsNewLoanOpen(true)}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">New Loan</span>
           </Button>
         </div>
       </div>
+
+      <NewLoanModal 
+        open={isNewLoanOpen} 
+        onOpenChange={setIsNewLoanOpen}
+      />
 
       {/* Loans Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">

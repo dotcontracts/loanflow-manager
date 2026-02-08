@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RecordPaymentModal } from "@/components/modals/RecordPaymentModal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -139,6 +140,7 @@ const methodLabels = {
 const Payments = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [isRecordPaymentOpen, setIsRecordPaymentOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-KE', {
@@ -237,12 +239,17 @@ const Payments = () => {
           <Button variant="outline" size="icon">
             <Download className="w-4 h-4" />
           </Button>
-          <Button className="action-btn-primary">
+          <Button className="action-btn-primary" onClick={() => setIsRecordPaymentOpen(true)}>
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Record Payment</span>
           </Button>
         </div>
       </div>
+
+      <RecordPaymentModal 
+        open={isRecordPaymentOpen} 
+        onOpenChange={setIsRecordPaymentOpen}
+      />
 
       {/* Payments Table */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
